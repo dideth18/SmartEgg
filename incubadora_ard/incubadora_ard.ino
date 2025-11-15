@@ -10,13 +10,13 @@
 // ==================== CONFIGURACIÓN ====================
 
 // WiFi
-const char* WIFI_SSID = "TU_WIFI_AQUI";          // Cambiar
-const char* WIFI_PASSWORD = "TU_PASSWORD_AQUI";   // Cambiar
+const char* WIFI_SSID = "TIGO-CD4D";          // Cambiar
+const char* WIFI_PASSWORD = "4D9697502518";   // Cambiar
 
 // Backend API
-const char* API_URL = "http://TU_IP_PC:3000/api/sensors/data";  // Cambiar TU_IP_PC
+const char* API_URL = "http://192.168.0.10:3000/api/sensors/data";  // Cambiar TU_IP_PC
 const char* API_KEY = "smartegg_esp32_key";
-int INCUBATION_ID = 1;  // ID de tu incubación (obtener del backend)
+int INCUBATION_ID = 3;  // ID de tu incubación (obtener del backend)
 
 // Pines
 #define DHT_PIN 4
@@ -66,8 +66,8 @@ void setup() {
   
   Serial.println("\n\n");
   Serial.println("╔════════════════════════════════════════╗");
-  Serial.println("║   🐣 SmartEgg - Sistema de Incubación ║");
-  Serial.println("║        ESP32 IoT Controller           ║");
+  Serial.println("║   🐣 SmartEgg - Sistema de Incubación    ║");
+  Serial.println("║        ESP32 IoT Controller            ║");
   Serial.println("╚════════════════════════════════════════╝");
   Serial.println();
 

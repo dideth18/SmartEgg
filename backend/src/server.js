@@ -5,6 +5,7 @@ const cors = require('cors');
 const http = require('http');
 const socketIo = require('socket.io');
 const { query } = require('../config/database');
+const telegramBot = require('../utils/telegramBot');
 
 // Importar rutas
 const authRoutes = require('../routes/authRoutes');
@@ -96,19 +97,16 @@ app.use(errorHandler);
 io.on('connection', (socket) => {
   console.log(`✅ Cliente conectado: ${socket.id}`);
 
-  // Unirse a sala de incubación específica
   socket.on('join-incubation', (incubationId) => {
     socket.join(`incubation-${incubationId}`);
     console.log(`📡 Cliente ${socket.id} unido a incubación: ${incubationId}`);
   });
 
-  // Salir de sala
   socket.on('leave-incubation', (incubationId) => {
     socket.leave(`incubation-${incubationId}`);
     console.log(`📡 Cliente ${socket.id} salió de incubación: ${incubationId}`);
   });
 
-  // Control manual de actuadores
   socket.on('control-actuator', (data) => {
     console.log('🎮 Control manual de actuador:', data);
     io.to(`incubation-${data.incubationId}`).emit('actuator-updated', data);
@@ -131,6 +129,9 @@ server.listen(PORT, () => {
   console.log(`🔗 API URL: http://localhost:${PORT}`);
   console.log(`💚 Health Check: http://localhost:${PORT}/health`);
   console.log('═══════════════════════════════════════════════════════');
+  
+  // Inicializar Telegram Bot
+  telegramBot.initBot();
 });
 
 // Manejo de errores no capturados

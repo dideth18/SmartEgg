@@ -9,9 +9,10 @@ import AlertBadge from '../components/Alerts/AlertBadge';
 import AlertToastContainer from '../components/Alerts/AlertToastContainer';
 import { useNavigate } from 'react-router-dom';
 
-const navigate = useNavigate();
+
 const Dashboard = () => {
   const { user, logout } = useAuth();
+  const navigate = useNavigate();
   const [incubations, setIncubations] = useState([]);
   const [selectedIncubation, setSelectedIncubation] = useState(null);
   const [sensorData, setSensorData] = useState(null);
@@ -153,14 +154,15 @@ const Dashboard = () => {
               onClick={() => navigate(`/alerts/${selectedIncubation.id}`)}
             />
           )}
-          <span className="text-gray-700">{user?.name}</span>
+          <button
+            onClick={() => navigate('/profile')}
+            className="text-gray-700 hover:text-indigo-600 transition"
+          >
+            {user?.name}
+          </button>
           <button onClick={logout} className="text-sm text-red-600 hover:text-red-700">
             Cerrar Sesión
           </button>
-          {/* Toasts de alertas */}
-          {selectedIncubation && (
-            <AlertToastContainer incubationId={selectedIncubation.id} />
-          )}
         </div>
       </nav>
 

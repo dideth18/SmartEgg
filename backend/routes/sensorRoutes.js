@@ -1,4 +1,5 @@
 // backend/routes/sensorRoutes.js
+const telegramBot = require('../utils/telegramBot');
 const express = require('express');
 const router = express.Router();
 const { query } = require('../config/database');
@@ -47,6 +48,8 @@ router.post('/data', async (req, res) => {
          RETURNING *`,
         [incubationId, incubation.user_id, `Temperatura actual: ${temperature}°C`, temperature.toString()]
       );
+      // Enviar a Telegram
+      telegramBot.sendAlert(incubation.user_id, alertResult.rows[0]);
       alerts.push(alertResult.rows[0]);
       io.to(`incubation-${incubationId}`).emit('new-alert', alertResult.rows[0]);
     }
@@ -58,6 +61,8 @@ router.post('/data', async (req, res) => {
          RETURNING *`,
         [incubationId, incubation.user_id, `Humedad actual: ${humidity}%`, humidity.toString()]
       );
+      // Enviar a Telegram
+      telegramBot.sendAlert(incubation.user_id, alertResult.rows[0]);
       alerts.push(alertResult.rows[0]);
       io.to(`incubation-${incubationId}`).emit('new-alert', alertResult.rows[0]);
     }
@@ -69,6 +74,8 @@ router.post('/data', async (req, res) => {
          RETURNING *`,
         [incubationId, incubation.user_id]
       );
+      // Enviar a Telegram
+      telegramBot.sendAlert(incubation.user_id, alertResult.rows[0]);
       alerts.push(alertResult.rows[0]);
       io.to(`incubation-${incubationId}`).emit('new-alert', alertResult.rows[0]);
     }
